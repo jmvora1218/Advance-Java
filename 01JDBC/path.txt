@@ -1,0 +1,7 @@
+D:\AdvanceJava\JDBC>java -cp C:\mysql-connector-java-5.1.17-bin.jar;. jdbcdemo
+
+
+OR
+
+
+set classpath=C:\mysql-connector-java-5.1.17-bin.jar;.;
