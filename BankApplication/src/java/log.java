@@ -23,19 +23,26 @@ public class log extends HttpServlet {
     res.setContentType("text/html");
     PrintWriter out=res.getWriter();
 
-    out.println("<html><head><title>Wel-Come to Bank Application</title></head><body>");
-    out.println("<form method='post' action='log'>");
-    out.print("<table border=0 '>");
-    out.println("<tr><td> Userid: </td><td>'"+req.getParameter("txtname")+"'  </td></tr>");
-    out.println("<tr><td> Date:</td><td>  </td></tr>");
-    out.print("<tr><td><select> <option value='seebalance'> See Balance </option> "
-                            + "<option value='depositemoney'> Deposite money </option>"
-                            + "<option value='whithdrawmoney'> Whithdraw wmoney </option>"
-                            + "<option value='ststement'> see statement </option>"
-                        + "</select>"
-            + "</td></tr>");
-    out.println("<tr><td> <input type='submit' name='btnsubmit' value='Submit'></td></tr>");
-    out.println("</form></body></html>");
+    out.println("<html>\n" +
+"<head>\n" +
+"\n" +
+"<title>Account Detail</title>\n" +
+"</head>\n" +
+"<body>\n" +
+"<div style='float:left; clear:none;margin-left:10%;margin-top:2%;'>\n" +
+"<table align='center' style='border:0;'>\n" +
+"<tr><td> User ID : </td> <td> '\"+req.getParameter(\"txtname\")+\"' </td> </tr>\n" +
+"<tr> <td> Name : </td> <td> #name </td> </tr>\n" +
+"<tr> <td> Date: </td> <td> #date </td> </tr>\n" +
+"<tr> <td> Amount: </td> <td> <input type='number' name='amount'> </td> </tr>\n" +
+"<tr> <td> Operate </td><td> <select> <option value='1'> Withdraw </option> <option value='2'> Deposite </option> </select></td></tr>\n" +
+"<tr> <td height='33'> <input type='submit' name='Submit' value='Submit'> </td></tr>\n" +
+"</table>\n" +
+"</div> \n" +
+"<div style='float:right; clear:none;margin-right:10%;margin-top:3%;' >\n" +
+"Balance is: #balance <br>\n" +
+"Transection Details are: <br><hr><br>\n" +
+"</div></body></html>");
     } 
     
     public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException{

@@ -3,52 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
 /**
  *
  * @author SHREEJI
  */
 public class login extends HttpServlet {
-    ServletContext ctx;
+    
     String un,up,driver,url,name,pass;
     Connection con=null;
     Statement stmt=null;
     ResultSet rs=null;
     
-     public void init(ServletConfig sc)throws ServletException
-    {
-        super.init(sc);
-        ctx=getServletContext();
-        driver=(String)ctx.getInitParameter("driver");
-        url=(String)ctx.getInitParameter("url");
-        un=(String)ctx.getInitParameter("un");
-        up=(String)ctx.getInitParameter("up");
- 
-       try
-       {
-        Class.forName(driver);
-        con=DriverManager.getConnection(url,un,up);
-           System.out.println("driver loaded");
+    public void connection() throws SQLException, ClassNotFoundException    {
+
+        Class.forName("com.mysql.jdbc.Driver");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdata","root","java");
+        System.out.println("driver loaded");
         stmt=con.createStatement();
-           System.out.println("connection establish");
-        rs=stmt.executeQuery("select * from login");
-       }
-       catch(Exception e)
-       {
-       System.out.println(e.getMessage());
-       }
+        System.out.println("connection establish");
+       
     }
     
 public void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletException,IOException
@@ -58,8 +36,8 @@ public void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletE
         out.println("<html><head><title>Wel-Come to Bank Application</title></head><body>");
         out.println("<form method='post'>");
         out.print("<table border=0 '>");
-        out.println("<tr><td> Enter Name:    </td><td><input type='text' name='txtname'></td></tr>");
-        out.println("<tr><td> Enter Password:</td><td><input type='text' name='txtpass'></td></tr>");
+        out.println("<tr><td> Enter Name:    </td><td><input type='text' name='username'></td></tr>");
+        out.println("<tr><td> Enter Password:</td><td><input type='text' name='password'></td></tr>");
         out.println("<tr><td> <input type='submit' name='btnsubmit' value='Submit'></td></tr>");
         out.println("<tr><td> <a href ='NewUser'>New User</a></td></tr>");
         out.print("<tr><td><a href ='ForgotPass'>Forgot Password</a></td></tr>");
@@ -68,30 +46,88 @@ public void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletE
 
     }
 
-public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException{
+ 
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException { 
+        String uname = req.getParameter("username");
+        String pass = req.getParameter("password");
+        ResultSet rs = null;
+        
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+            
+         
+        try{ 
+            connection();
+        }catch(Exception e) {
+        out.print("Error connect to db");
+        }
+        String sql = "select * from login where userid='"+uname+"'";
+        try {
+            rs=stmt.executeQuery(sql);
+            if(rs.next()) { 
+                if(pass.equals(rs.getString(2))) { 
+                    out.print("<script type='text/javascript'> alert('login success!');"
+                            + "</script>");
+                    HttpSession hs = req.getSession(true);
+                    hs.setAttribute("username",uname);
+                    res.sendRedirect("http://localhost:8084/BankApplication/log");
+                } else { 
+                    out.print("<script type='text/javascript'> alert('Invalid Password!');"
+                            + "</script>");
+                    doGet(req, res);
+                }
+            } else { 
+                out.print("<script type='text/javascript'> alert('Invalid Password!');"
+                            + "</script>");
+                doGet(req, res);
+            }
+        } catch (Exception ex) {
+            out.print(ex.getMessage());
+                doGet(req, res);
+        }
+        
+    }
+
+
+/*
+public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOException, ServletException{
     res.setContentType("text/html");
     PrintWriter out=res.getWriter();
+    
+            name=req.getParameter("txtname");
+            pass=req.getParameter("txtpass");
+                
+            String sql = "select * from login where userid='"+name+"'";
+        try {
+            rs=stmt.executeQuery(sql);
+        } catch (SQLException ex) {
+            out.print("err in driver");
+        }
+                
     if(req.getParameter("btnsubmit")!=null)
         {
             try
             {
-                name=req.getParameter("txtname");
-                pass=req.getParameter("txtpass");
-                
-                System.out.println(name+pass);
-                while(rs.next())
+                if(rs.next())
                 {
-                     String n=rs.getString("NAME");
-                     String p=rs.getString("PASSWORD");
-                     System.out.println(" "+n+p);
-                     if(name.equals(n)&&pass.equals(p)){
-                         res.sendRedirect("/log");
-                     }
+                    if(pass.equals(rs.getString(2))){
+                        HttpSession hs=req.getSession(true);
+                        hs.setAttribute("txtname", name);
+                        res.sendRedirect("http://localhost:8080/bankApplication/log");
+                     }else{
+                        out.print("Enter valid Password.");
+                        doGet(req, res);
+                    }
+                }else{
+                    out.print("Enter valid Password..");
+                        doGet(req, res);
                 }
             }catch(Exception e){
                 out.print("err in query...");
+                doGet(req, res);
             }
         }
     
-}
+}*/
+
 }
