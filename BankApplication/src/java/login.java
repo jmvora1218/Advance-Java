@@ -70,7 +70,7 @@ public void doGet(HttpServletRequest req,HttpServletResponse res)throws ServletE
                             + "</script>");
                     HttpSession hs = req.getSession(true);
                     hs.setAttribute("username",uname);
-                    res.sendRedirect("http://localhost:8084/BankApplication/log");
+                    res.sendRedirect("http://localhost:8080/BankApplication/log");
                 } else { 
                     out.print("<script type='text/javascript'> alert('Invalid Password!');"
                             + "</script>");

@@ -10,11 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,16 +68,14 @@ public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOExce
     
     ResultSet rs=null;
     String sql;
-
      try {
             connection();
-        
         sql = "select * from login where userid='"+userid+"'";
         rs = stmt.executeQuery(sql);
         if(rs.next()){
             out.print("<script type='text/javascript'> alert('User Already Exist! Login!');"
                             + "</script>");
-            res.sendRedirect("http://localhost:8084/BankApplication/login");
+            res.sendRedirect("http://localhost:8080/BankApplication/login");
         }
         } catch(Exception e) {
             try {
@@ -93,12 +87,11 @@ public void doPost(HttpServletRequest req,HttpServletResponse res) throws IOExce
             stmt.executeUpdate(sql);
             out.print("<script type='text/javascript'> alert('User created! You can Login!');"
                             + "</script>");
-            res.sendRedirect("http://localhost:8084/BankApplication/login");
+            res.sendRedirect("http://localhost:8080/BankApplication/login");
             } catch(Exception ex) {
             
             out.print(e.getMessage());
             }
-        }
-      
+        }    
 }
 }

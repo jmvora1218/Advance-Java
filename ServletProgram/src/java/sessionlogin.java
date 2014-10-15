@@ -9,23 +9,23 @@ import java.util.*;
      Statement stmt=null;
      ResultSet rs=null;
     
-     //String url="jdbc:mysql://localhost:3306/lab";
-     //String up="java";
-     //String un="root";
+     String url="jdbc:mysql://localhost:3306/lab";
+     String up="java";
+     String un="root";
      String n,p;
      boolean flag1=false;
      boolean flag2=false;
-     ServletContext ctx;
+     //ServletContext ctx;
      
    public void init(ServletConfig sc)throws ServletException
      {
         super.init(sc);
         try
         {
-             //Class.forName("com.mysql.jdbc.Driver");
-             //con=DriverManager.getConnection(url,un,up);
-            ctx=getServletContext();
-            con=(Connection)ctx.getAttribute("mycon");
+             Class.forName("com.mysql.jdbc.Driver");
+             con=DriverManager.getConnection(url,un,up);
+            //ctx=getServletContext();
+            //con=(Connection)ctx.getAttribute("mycon");
             stmt=con.createStatement();
             rs=stmt.executeQuery("select * from employee");
         }
