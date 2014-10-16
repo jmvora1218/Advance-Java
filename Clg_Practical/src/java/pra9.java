@@ -5,19 +5,14 @@
  */
 package lab.clg;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 /**
  *
  * @author SHREEJI
  */
-public class pra3 {
+public class pra9{
     static Connection con;
     static PreparedStatement pstmt;
     static Statement stmt;

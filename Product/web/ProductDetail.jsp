@@ -11,16 +11,23 @@
     ResultSet rs=null;
     String id,name,pqty,prise;
 
-    public void jspInit()throws Exception{
+    public void jspInit(){
+         try
+         {
         Class.forName("com.mysql.jdbc.Driver");
         System.out.println("Driver is loaded");
-        con=DriverManager.getConnection("jdbc:mysql://localhost/jsp","root","java");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/jsp","root","java");
         stmt =con.createStatement();
+         }
+         catch(Exception e){
+        System.out.println(e.getMessage());
+    }
     }
 %>
 <%
     id=request.getParameter("pid");
-    String sql="select * from productdertail where pid='+pid'";
+    String sql="select * from productdetail where pid="+id;
+     
     try{
         rs=stmt.executeQuery(sql);
         rs.next();
@@ -28,16 +35,16 @@
         pqty=rs.getString(2);
         prise=rs.getString(3);
     }catch(Exception e){
-        System.out.print(e.getMessage());
+        out.print(e.getMessage());
     }
 %>
 <html>
     <body>
         <h1>Hello World!</h1>
         <form>
-            <th> id=<%=id%> </th>
-            <th> pqty=<%=pqty%> </th>
-            <th> prise=<%=prise%> </th>
+             id=<%=id%> 
+             pqty=<%=pqty%> 
+             prise=<%=prise%> 
         </form>
     </body>
 </html>

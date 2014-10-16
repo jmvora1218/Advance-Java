@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.web.project</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/web-project/3">
-            <name>LoginBeans</name>
+            <name>JSP_Basic</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
@@ -19,8 +19,5 @@
                 <root id="test.src.dir" name="Test Packages"/>
             </test-roots>
         </data>
-        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
-            <word>showdata</word>
-        </spellchecker-wordlist>
     </configuration>
 </project>

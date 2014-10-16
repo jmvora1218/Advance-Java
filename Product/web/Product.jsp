@@ -24,14 +24,14 @@
         System.out.println(e.getMessage());
     }
     }
-
 %>
 <% 
     if(request.getParameter("btnsubmit")!=null){
-    String pid=request.getParameter("name");
+    String pid=request.getParameter("product");
+    System.out.println("pid==="+pid);
 %>
     <jsp:include page="ProductDetail.jsp">
-        <jsp:param name="pid" value=" <% = pid %> "/>
+        <jsp:param name="pid" value="<%=pid%>"/>
     </jsp:include>
 <% 
     }
@@ -39,7 +39,7 @@
 
 <html>
     <body>
-        <form action="ProductDetail.jsp">
+        <form action="Product.jsp">
             Product Name: <select name="product">
             <%
                 try{
@@ -48,11 +48,9 @@
                     {
                         id=rs.getString(1);
                         name=rs.getString(2);
-            %>
-            
+            %>            
                         <option value="<%=id %>"><%=name%> </option>
-            
-          
+
             <%
                     }    
                 }catch(Exception e){
