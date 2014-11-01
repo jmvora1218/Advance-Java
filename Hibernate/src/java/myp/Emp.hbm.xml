@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 1, 2014 11:36:27 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="myp.Emp" table="emp" catalog="hibernate" optimistic-lock="version">
+        <id name="un" type="string">
+            <column name="un" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="up" type="string">
+            <column name="up" length="45" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
